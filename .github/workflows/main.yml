@@ -24,8 +24,11 @@ jobs:
       - name: Build the Docker Image
         run: docker build -t web_application .
 
-      - name: Login to Docker Hub
-        run: echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+      - name: login to docker hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Tag the Docker Image
         run: docker tag web_application ${{ secrets.DOCKER_HUB_USERNAME }}/web_application
